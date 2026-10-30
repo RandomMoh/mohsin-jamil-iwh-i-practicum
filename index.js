@@ -9,7 +9,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const plantsUrl = 'https://api.hubapi.com/crm/v3/objects/2-271005007';
-const headers = { Authorization: `Bearer ${process.env.PRIVATE_APP_ACCESS_TOKEN}` };
+const token = process.env.PRIVATE_APP_ACCESS_TOKEN;
+const headers = { Authorization: `Bearer ${token}` };
+
+function logHubSpotError(error) {
+    const details = JSON.stringify(error.response?.data || error.message);
+    console.error('HubSpot request failed:', error.response?.status || 'network error',
+        token ? details.split(token).join('[redacted]') : details);
+}
+
+function errorMessage(error) {
+    const status = error.response?.status;
+    if (status === 401) return 'HubSpot rejected the access token. Check the server configuration.';
+    if (status === 403) return 'HubSpot denied access. Check the private app permissions.';
+    if (status === 400) return 'HubSpot rejected the plant data. Check the fields and server log.';
+    return 'Unable to contact HubSpot. Check the server log and try again.';
+}
 
 app.get('/', async (req, res) => {
     try {
@@ -19,8 +34,8 @@ app.get('/', async (req, res) => {
         });
         res.render('homepage', { title: 'Plants | Integrating With HubSpot I Practicum', plants: response.data.results });
     } catch (error) {
-        console.error('HubSpot request failed:', error.response?.status, error.response?.data || error.message);
-        res.status(502).send('Unable to load plants from HubSpot. Check the server log for details.');
+        logHubSpotError(error);
+        res.status(502).send(errorMessage(error));
     }
 });
 
@@ -42,8 +57,8 @@ app.post('/update-cobj', async (req, res) => {
         await axios.post(plantsUrl, { properties: values }, { headers });
         res.redirect('/');
     } catch (error) {
-        console.error('HubSpot request failed:', error.response?.status, error.response?.data || error.message);
-        res.status(502).render('updates', { title, values, error: 'Unable to add the plant in HubSpot. Check the server log for details and try again.' });
+        logHubSpotError(error);
+        res.status(502).render('updates', { title, values, error: errorMessage(error) });
     }
 });
 
