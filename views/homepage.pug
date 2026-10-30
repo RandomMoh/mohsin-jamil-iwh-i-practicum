@@ -1,0 +1,23 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title= title
+    link(rel='stylesheet' href='/css/style.css')
+  body
+    main
+      a(href='/update-cobj') Add to this table
+      h1 Plants
+      table
+        thead
+          tr
+            th(scope='col') Name
+            th(scope='col') Species
+            th(scope='col') Watering frequency
+        tbody
+          each plant in plants
+            tr
+              td= plant.properties.name
+              td= plant.properties.species
+              td= plant.properties.watering_frequency

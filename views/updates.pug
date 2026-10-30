@@ -1,0 +1,21 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    title= title
+    link(rel='stylesheet' href='/css/style.css')
+  body
+    main
+      a(href='/') Return to the homepage
+      h1 Add a plant
+      if error
+        p.error(role='alert')= error
+      form(method='post' action='/update-cobj')
+        label(for='name') Name (required)
+        input#name(type='text' name='name' value=values.name required)
+        label(for='species') Species
+        input#species(type='text' name='species' value=values.species)
+        label(for='watering_frequency') Watering frequency
+        input#watering_frequency(type='text' name='watering_frequency' value=values.watering_frequency)
+        button(type='submit') Add plant
