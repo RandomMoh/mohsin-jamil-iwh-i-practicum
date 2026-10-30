@@ -2,7 +2,8 @@ body { font-family: system-ui, sans-serif; color: #21382c; background: #f5f8f3; 
 main { max-width: 760px; margin: 3rem auto; padding: 0 1.25rem; }
 a { color: #286342; }
 h1 { margin: 1.5rem 0; }
-table { width: 100%; border-collapse: collapse; background: white; }
+.table-wrap { overflow-x: auto; }
+table { min-width: 480px; width: 100%; border-collapse: collapse; background: white; }
 th, td { text-align: left; padding: .85rem; border-bottom: 1px solid #d7e3d8; }
 th { background: #e5eee4; }
 form { display: grid; gap: .5rem; max-width: 420px; }

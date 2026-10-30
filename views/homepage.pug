@@ -9,18 +9,19 @@ html(lang='en')
     main
       a(href='/update-cobj') Add to this table
       h1 Plants
-      table
-        thead
-          tr
-            th(scope='col') Name
-            th(scope='col') Species
-            th(scope='col') Watering frequency
-        tbody
-          if !plants.length
+      .table-wrap
+        table
+          thead
             tr
-              td(colspan='3') No plants yet. Add your first plant.
-          each plant in plants
-            tr
-              td= plant.properties.name
-              td= plant.properties.species
-              td= plant.properties.watering_frequency
+              th(scope='col') Name
+              th(scope='col') Species
+              th(scope='col') Watering frequency
+          tbody
+            if !plants.length
+              tr
+                td(colspan='3') No plants yet. Add your first plant.
+            each plant in plants
+              tr
+                td= plant.properties.name
+                td= plant.properties.species
+                td= plant.properties.watering_frequency
