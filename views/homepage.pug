@@ -9,6 +9,10 @@ html(lang='en')
     main
       a(href='/update-cobj') Add to this table
       h1 Plants
+      if added
+        p(role='status') Plant added successfully.
+        script.
+          history.replaceState(null, '', '/');
       .table-wrap
         table
           thead
