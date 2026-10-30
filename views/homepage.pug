@@ -9,15 +9,23 @@ html(lang='en')
     main
       a(href='/update-cobj') Add to this table
       h1 Plants
-      table
-        thead
-          tr
-            th(scope='col') Name
-            th(scope='col') Species
-            th(scope='col') Watering frequency
-        tbody
-          each plant in plants
+      if added
+        p(role='status') Plant added successfully.
+        script.
+          history.replaceState(null, '', '/');
+      .table-wrap
+        table
+          thead
             tr
-              td= plant.properties.name
-              td= plant.properties.species
-              td= plant.properties.watering_frequency
+              th(scope='col') Name
+              th(scope='col') Species
+              th(scope='col') Watering frequency
+          tbody
+            if !plants.length
+              tr
+                td(colspan='3') No plants yet. Add your first plant.
+            each plant in plants
+              tr
+                td= plant.properties.name
+                td= plant.properties.species
+                td= plant.properties.watering_frequency

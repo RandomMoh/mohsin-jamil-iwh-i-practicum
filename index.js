@@ -32,7 +32,7 @@ app.get('/', async (req, res) => {
             headers,
             params: { properties: 'name,species,watering_frequency', limit: 100 }
         });
-        res.render('homepage', { title: 'Plants | Integrating With HubSpot I Practicum', plants: response.data.results });
+        res.render('homepage', { title: 'Plants | Integrating With HubSpot I Practicum', plants: response.data.results, added: req.query.added === '1' });
     } catch (error) {
         logHubSpotError(error);
         res.status(502).send(errorMessage(error));
@@ -55,7 +55,7 @@ app.post('/update-cobj', async (req, res) => {
     }
     try {
         await axios.post(plantsUrl, { properties: values }, { headers });
-        res.redirect('/');
+        res.redirect('/?added=1');
     } catch (error) {
         logHubSpotError(error);
         res.status(502).render('updates', { title, values, error: errorMessage(error) });
