@@ -28,4 +28,23 @@ app.get('/update-cobj', (req, res) => {
     res.render('updates', { title: 'Update Custom Object Form | Integrating With HubSpot I Practicum', values: {} });
 });
 
+app.post('/update-cobj', async (req, res) => {
+    const values = {
+        name: (req.body.name || '').trim(),
+        species: (req.body.species || '').trim(),
+        watering_frequency: (req.body.watering_frequency || '').trim()
+    };
+    const title = 'Update Custom Object Form | Integrating With HubSpot I Practicum';
+    if (!values.name) {
+        return res.status(400).render('updates', { title, values, error: 'Please enter a name.' });
+    }
+    try {
+        await axios.post(plantsUrl, { properties: values }, { headers });
+        res.redirect('/');
+    } catch (error) {
+        console.error('HubSpot request failed:', error.response?.status, error.response?.data || error.message);
+        res.status(502).render('updates', { title, values, error: 'Unable to add the plant in HubSpot. Check the server log for details and try again.' });
+    }
+});
+
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
