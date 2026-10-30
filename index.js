@@ -24,4 +24,8 @@ app.get('/', async (req, res) => {
     }
 });
 
+app.get('/update-cobj', (req, res) => {
+    res.render('updates', { title: 'Update Custom Object Form | Integrating With HubSpot I Practicum', values: {} });
+});
+
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
