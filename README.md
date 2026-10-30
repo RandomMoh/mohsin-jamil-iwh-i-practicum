@@ -6,6 +6,16 @@ To read the full directions, please go to the [practicum instructions](https://a
 
 **Custom object list:** [Plants in the test account](https://app-na2.hubspot.com/contacts/247845811/objects/2-271005007/views/all/list)
 
+## Run locally
+
+Install the dependencies with `npm install`. Create a `.env` file in the repository folder and add your test account private app token:
+
+```ini
+PRIVATE_APP_ACCESS_TOKEN=your-token-here
+```
+
+The private app needs custom object read and write scopes. Keep the real token private; `.env` is ignored by Git. Start the app with `node index.js`, then open [http://localhost:3000](http://localhost:3000).
+
 ___
 ## Tips:
 - Commit to your repository often. Even if you make small tweaks to your code, it’s best to be committing to your repository frequently.
