@@ -16,6 +16,9 @@ html(lang='en')
             th(scope='col') Species
             th(scope='col') Watering frequency
         tbody
+          if !plants.length
+            tr
+              td(colspan='3') No plants yet. Add your first plant.
           each plant in plants
             tr
               td= plant.properties.name
